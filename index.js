@@ -48,8 +48,10 @@ function getOptionalAssignmentsData() {
 
     for (let i = 1; i <= optionalAssignmentsCount; i++) {
         const optionalAssignmentLine = document.getElementById('optionalAssignment' + i);
-        const optionalAssignmentDateLine = document.getElementById()
-        optionalAssignmentsContent += optionalAssignmentLine.value;
+        const optionalAssignmentDateLine = document.getElementById();
+        const date = new Date(optionalAssignmentDateLine.value);
+        const dateString = date.toLocaleDateString('en-us', {year:"numeric", month:"numeric", day:"numeric", hour:'numeric', minute:"numeric"});
+        optionalAssignmentsContent += dateString + ": " + optionalAssignmentLine.value;
         optionalAssignmentsContent += '\n';    
     };
 
