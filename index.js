@@ -67,7 +67,7 @@ function download() {
     const content = requiredResources + optionalResources + requiredAssignments + optionalAssignments;
 
 
-    
+
     const filename = formData.get('filename');
     const filecontent = formData.get('content');
     const selectedclass = formData.get('classlist');
@@ -114,8 +114,12 @@ function addLine(event) {
         requiredAssignmentsCount ++;
         var newTextAreaElement = document.createElement('textarea');
         newTextAreaElement.setAttribute('id', 'requiredAssignment' + requiredAssignmentsCount);
+        var newDateTimeElement = document.createElement('input');
+        newDateTimeElement.setAttribute('type', 'datetime-local');
+        newDateTimeElement.setAttribute('id', 'reqdAssignmentDatetimePicker' + requiredAssignmentsCount);
         var requiredAssignmentsDiv = document.getElementById('required-assignment-section');
         requiredAssignmentsDiv.appendChild(newTextAreaElement);
+        requiredAssignmentsDiv.appendChild(newDateTimeElement);
         return; 
     };
 
@@ -123,8 +127,12 @@ function addLine(event) {
         optionalAssignmentsCount ++;
         var newTextAreaElement = document.createElement('textarea');
         newTextAreaElement.setAttribute('id', 'optionalAssignment' + optionalAssignmentsCount);
+        var newDateTimeElement = document.createElement('input');
+        newDateTimeElement.setAttribute('type', 'datetime-local');
+        newDateTimeElement.setAttribute('id', 'optAssignmentDatetimePicker' + optionalAssignmentsCount);
         var optionalAssignmentsDiv = document.getElementById('optional-assignment-section');
         optionalAssignmentsDiv.appendChild(newTextAreaElement);
+        optionalAssignmentsDiv.appendChild(newDateTimeElement);
         return; 
     };
 };
