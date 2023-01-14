@@ -3,13 +3,16 @@ var optionalResourcesCount = 0;
 var requiredAssignmentsCount = 0;
 var optionalAssignmentsCount = 0;
 
+var hRule = "_________________________________________________________" + "\n"
+var headingDashes = " ----- "
+
 
 function getRequiredResourcesData() {
     let requiredResourcesContent = '';
 
     for (let i = 1; i <= requiredResourcesCount; i++) {
         const requiredResourceLine = document.getElementById('requiredResource' + i);
-        requiredResourcesContent += requiredResourceLine.value;
+        requiredResourcesContent += "-" + requiredResourceLine.value;
         requiredResourcesContent += '\n';    
     };
 
@@ -21,7 +24,7 @@ function getOptionalResourcesData() {
 
     for (let i = 1; i <= optionalResourcesCount; i++) {
         const optionalResourceLine = document.getElementById('optionalResource' + i);
-        optionalResourcesContent += optionalResourceLine.value;
+        optionalResourcesContent += "-" + optionalResourceLine.value;
         optionalResourcesContent += '\n';    
     };
 
@@ -36,7 +39,7 @@ function getRequiredAssignmentsData() {
         const requiredAssignmentDateLine = document.getElementById('reqdAssignmentDatetimePicker' + i);
         const date = new Date(requiredAssignmentDateLine.value);
         const dateString = date.toLocaleDateString('en-us', {year:"numeric", month:"numeric", day:"numeric", hour:'numeric', minute:"numeric"});
-        requiredAssignmentsContent += dateString + ": " + requiredAssignmentLine.value;
+        requiredAssignmentsContent += "-" + dateString + ": " + requiredAssignmentLine.value;
         requiredAssignmentsContent += '\n';    
     };
 
@@ -51,7 +54,7 @@ function getOptionalAssignmentsData() {
         const optionalAssignmentDateLine = document.getElementById('optAssignmentDatetimePicker' + i);
         const date = new Date(optionalAssignmentDateLine.value);
         const dateString = date.toLocaleDateString('en-us', {year:"numeric", month:"numeric", day:"numeric", hour:'numeric', minute:"numeric"});
-        optionalAssignmentsContent += dateString + ": " + optionalAssignmentLine.value;
+        optionalAssignmentsContent += "-" + dateString + ": " + optionalAssignmentLine.value;
         optionalAssignmentsContent += '\n';    
     };
 
@@ -61,7 +64,9 @@ function getOptionalAssignmentsData() {
 
 
 
-function download() {
+function download(event) {
+    event.preventDefault();
+
     const formElement = document.getElementById('downloadform');
     const formData = new FormData(formElement);
 
@@ -70,17 +75,27 @@ function download() {
     const requiredAssignments = getRequiredAssignmentsData();
     const optionalAssignments = getOptionalAssignmentsData();
 
-    const content = requiredResources + optionalResources + requiredAssignments + optionalAssignments;
-
-
-
     const filename = formData.get('filename');
     const filecontent = formData.get('content');
     const selectedclass = formData.get('classlist');
     if (selectedclass === "" ) {
         alert('You need to select a class!');
-        return;
+        return false;
     };
+
+
+
+    const content = hRule + selectedclass + '\n' + hRule 
+                  + headingDashes + "Resources" + headingDashes + '\n'
+                  + "Required Resources" + ":" + '\n' + requiredResources 
+                  + "Optional Resources" + ":" + '\n' + optionalResources + '\n'
+                  + headingDashes + "Assignments" + headingDashes + '\n'
+                  + "Required Assignments"  + ":" + '\n' + requiredAssignments 
+                  + "Optional Assignemts"  + ":" + '\n' + optionalAssignments
+                  + hRule;
+
+
+
 
 
     var element = document.createElement('a');
