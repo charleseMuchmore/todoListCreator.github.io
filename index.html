@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Class Todo Creator</title>
+	<meta name="description" content="contains a todo text file creator" />
+	<meta name="keywords" content="text file, txt, create, creator, generator, text file generator, todo list" />
+	<meta name="author" content="Charlese Muchmore" />
+	<link href="index.css" rel="stylesheet" type="text/css" />
+	<script src="index.js"></script>
+
+</head>
+<body>
+    <form id="downloadform" onsubmit="download()">
+        <!--File name entry field-->
+        <h5>Filename</h5>
+        <input type="text" name="filename" value="Enter filename here">
+        <!--class dropdown selector-->
+        <h5>Class: </h5>
+        <select name="classlist" id="classlist">
+            <option value="">--Please choose an class--</option>
+            <option value="CIS195 - Web Authoring - M/W 12-2:50, Hirons">Web Authoring</option>
+            <option value="CS133JS - Beginning JavaScript - (async), Bird">Beginning JavaScript</option>
+            <option value="WR121 - Academic Composition - Tu/Th 10-11:50, Sarah">Academic Composition</option>
+            <option value="CS161N - Beginning C# - Tu/Th 2-3:50, Stewart">Beginning C#</option>
+        </select>
+        <hr>
+        <!--Necessary resources input-->
+        <div id="required-resource-section">
+            <h5>Required Resources</h5>
+        </div>
+        <button type='button' id="requiredResources" onclick="addLine(event)">+</button>
+        <hr>
+
+        <!--Extra resources input-->
+        <div id="optional-resource-section">
+            <h5>Optional Resources</h5>
+        </div>
+        <button type='button' id="optionalResources" onclick="addLine(event)">+</button>
+        <hr>
+
+        <!--Necessary assignments input-->
+        <div id="required-assignment-section">
+            <h5>Required Assignment</h5>
+        </div>
+        <button type='button' id="requiredAssignments" onclick="addLine(event)">+</button>
+        <hr>
+
+        <!--Extra assignments input-->
+        <div id="optional-assignment-section">
+            <h5>Optional Assignments</h5>
+        </div>
+        <button type='button' id="optionalAssignments" onclick="addLine(event)">+</button>
+        <hr>
+
+        <!--Submit button-->
+        <input type="submit" value="Download">
+    </form>
+</body>
+</html>
