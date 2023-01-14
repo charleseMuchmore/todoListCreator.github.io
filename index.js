@@ -30,10 +30,13 @@ function getOptionalResourcesData() {
 
 function getRequiredAssignmentsData() {
     let requiredAssignmentsContent = '';
-
+    
     for (let i = 1; i <= requiredAssignmentsCount; i++) {
         const requiredAssignmentLine = document.getElementById('requiredAssignment' + i);
-        requiredAssignmentsContent += requiredAssignmentLine.value;
+        const requiredAssignmentDateLine = document.getElementById('reqdAssignmentDatetimePicker' + 1);
+        const date = new Date(requiredAssignmentDateLine.value);
+        const dateString = date.toLocaleDateString('en-us', {year:"numeric", month:"numeric", day:"numeric", hour:'numeric', minute:"numeric"});
+        requiredAssignmentsContent += dateString + ": " + requiredAssignmentLine.value;
         requiredAssignmentsContent += '\n';    
     };
 
@@ -45,6 +48,7 @@ function getOptionalAssignmentsData() {
 
     for (let i = 1; i <= optionalAssignmentsCount; i++) {
         const optionalAssignmentLine = document.getElementById('optionalAssignment' + i);
+        const optionalAssignmentDateLine = document.getElementById()
         optionalAssignmentsContent += optionalAssignmentLine.value;
         optionalAssignmentsContent += '\n';    
     };
