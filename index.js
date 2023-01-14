@@ -33,7 +33,7 @@ function getRequiredAssignmentsData() {
     
     for (let i = 1; i <= requiredAssignmentsCount; i++) {
         const requiredAssignmentLine = document.getElementById('requiredAssignment' + i);
-        const requiredAssignmentDateLine = document.getElementById('reqdAssignmentDatetimePicker' + 1);
+        const requiredAssignmentDateLine = document.getElementById('reqdAssignmentDatetimePicker' + i);
         const date = new Date(requiredAssignmentDateLine.value);
         const dateString = date.toLocaleDateString('en-us', {year:"numeric", month:"numeric", day:"numeric", hour:'numeric', minute:"numeric"});
         requiredAssignmentsContent += dateString + ": " + requiredAssignmentLine.value;
@@ -48,7 +48,7 @@ function getOptionalAssignmentsData() {
 
     for (let i = 1; i <= optionalAssignmentsCount; i++) {
         const optionalAssignmentLine = document.getElementById('optionalAssignment' + i);
-        const optionalAssignmentDateLine = document.getElementById();
+        const optionalAssignmentDateLine = document.getElementById('optAssignmentDatetimePicker' + i);
         const date = new Date(optionalAssignmentDateLine.value);
         const dateString = date.toLocaleDateString('en-us', {year:"numeric", month:"numeric", day:"numeric", hour:'numeric', minute:"numeric"});
         optionalAssignmentsContent += dateString + ": " + optionalAssignmentLine.value;
