@@ -87,10 +87,10 @@ function download(event) {
 
     const content = hRule + selectedclass + '\n' + hRule 
                   + headingDashes + "Resources" + headingDashes + '\n'
-                  + "Required Resources" + ":" + '\n' + requiredResources 
+                  + "Required Resources" + ":" + '\n' + requiredResources + '\n'
                   + "Optional Resources" + ":" + '\n' + optionalResources + '\n'
                   + headingDashes + "Assignments" + headingDashes + '\n'
-                  + "Required Assignments"  + ":" + '\n' + requiredAssignments 
+                  + "Required Assignments"  + ":" + '\n' + requiredAssignments + '\n'
                   + "Optional Assignemts"  + ":" + '\n' + optionalAssignments
                   + hRule;
 
