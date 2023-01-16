@@ -13,47 +13,45 @@
     <form id="downloadform" onsubmit="download(event)">
         <!--File name entry field-->
         <h5>Filename</h5>
-        <input type="text" name="filename" value="Enter filename here">
+        <input type="text" name="filename" value="Enter filename here" class="filename-input">
+        <hr>    
+
         <!--class dropdown selector-->
-        <h5>Class: </h5>
-        <select name="classlist" id="classlist">
+        <h5>Class </h5>
+        <select name="classlist" id="classlist" class="class-selector">
             <option value="">--Please choose an class--</option>
             <option value="CIS195 - Web Authoring - M/W 12-2:50, Hirons">Web Authoring</option>
             <option value="CS133JS - Beginning JavaScript - (async), Bird">Beginning JavaScript</option>
             <option value="WR121 - Academic Composition - Tu/Th 10-11:50, Sarah">Academic Composition</option>
             <option value="CS161N - Beginning C# - Tu/Th 2-3:50, Stewart">Beginning C#</option>
         </select>
-        <hr>
         <!--Necessary resources input-->
-        <div id="required-resource-section">
+        <div id="required-resource-section" class="section-container">
             <h5>Required Resources</h5>
+            <button type='button' class="plus-button" id="requiredResources" onclick="addLine(event)">+</button>
         </div>
-        <button type='button' id="requiredResources" onclick="addLine(event)">+</button>
-        <hr>
 
         <!--Extra resources input-->
-        <div id="optional-resource-section">
+        <div id="optional-resource-section" class="section-container">
             <h5>Optional Resources</h5>
+            <button type='button' class="plus-button" id="optionalResources" onclick="addLine(event)">+</button>
         </div>
-        <button type='button' id="optionalResources" onclick="addLine(event)">+</button>
-        <hr>
 
         <!--Necessary assignments input-->
-        <div id="required-assignment-section">
-            <h5>Required Assignment</h5>
+        <div id="required-assignment-section" class="section-container">
+            <h5>Required Assignments</h5>
+            <button type='button' class="plus-button" id="requiredAssignments" onclick="addLine(event)">+</button>
         </div>
-        <button type='button' id="requiredAssignments" onclick="addLine(event)">+</button>
-        <hr>
 
         <!--Extra assignments input-->
-        <div id="optional-assignment-section">
+        <div id="optional-assignment-section" class="section-container">
             <h5>Optional Assignments</h5>
+            <button type='button' class="plus-button" id="optionalAssignments" onclick="addLine(event)">+</button>
         </div>
-        <button type='button' id="optionalAssignments" onclick="addLine(event)">+</button>
-        <hr>
+
 
         <!--Submit button-->
-        <input type="submit" value="Download">
+        <input type="submit" value="Download" class="download-button">
     </form>
 </body>
 </html>
