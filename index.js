@@ -19,18 +19,6 @@ function getRequiredResourcesData() {
     return requiredResourcesContent;
 }
 
-function getOptionalResourcesData() {
-    let optionalResourcesContent = '';
-
-    for (let i = 1; i <= optionalResourcesCount; i++) {
-        const optionalResourceLine = document.getElementById('optionalResource' + i);
-        optionalResourcesContent += "-" + optionalResourceLine.value;
-        optionalResourcesContent += '\n';    
-    };
-
-    return optionalResourcesContent;
-}
-
 function getRequiredAssignmentsData() {
     let requiredAssignmentsContent = '';
     
@@ -46,21 +34,6 @@ function getRequiredAssignmentsData() {
     return requiredAssignmentsContent;
 }
 
-function getOptionalAssignmentsData() {
-    let optionalAssignmentsContent = '';
-
-    for (let i = 1; i <= optionalAssignmentsCount; i++) {
-        const optionalAssignmentLine = document.getElementById('optionalAssignment' + i);
-        const optionalAssignmentDateLine = document.getElementById('optAssignmentDatetimePicker' + i);
-        const date = new Date(optionalAssignmentDateLine.value);
-        const dateString = date.toLocaleDateString('en-us', {year:"numeric", month:"numeric", day:"numeric", hour:'numeric', minute:"numeric"});
-        optionalAssignmentsContent += "-" + dateString + ": " + optionalAssignmentLine.value;
-        optionalAssignmentsContent += '\n';    
-    };
-
-    return optionalAssignmentsContent;
-}
-
 
 
 
@@ -71,9 +44,7 @@ function download(event) {
     const formData = new FormData(formElement);
 
     const requiredResources = getRequiredResourcesData();
-    const optionalResources = getOptionalResourcesData();
     const requiredAssignments = getRequiredAssignmentsData();
-    const optionalAssignments = getOptionalAssignmentsData();
 
     const filename = formData.get('filename');
     const filecontent = formData.get('content');
@@ -84,17 +55,12 @@ function download(event) {
     };
 
 
-
     const content = hRule + selectedclass + '\n' + hRule 
                   + headingDashes + "Resources" + headingDashes + '\n'
-                  + "Required Resources" + ":" + '\n' + requiredResources + '\n'
-                  + "Optional Resources" + ":" + '\n' + optionalResources + '\n'
+                  + requiredResources + '\n'
                   + headingDashes + "Assignments" + headingDashes + '\n'
-                  + "Required Assignments"  + ":" + '\n' + requiredAssignments + '\n'
-                  + "Optional Assignemts"  + ":" + '\n' + optionalAssignments
+                  requiredAssignments + '\n'
                   + hRule;
-
-
 
 
 
@@ -122,15 +88,6 @@ function addLine(event) {
         return; 
     };
 
-    if (sectionName === 'optionalResources') {
-        optionalResourcesCount ++;
-        var newTextAreaElement = document.createElement('textarea');
-        newTextAreaElement.setAttribute('id', 'optionalResource' + optionalResourcesCount);
-        var optionalResourcesDiv = document.getElementById('optional-resource-section');
-        optionalResourcesDiv.appendChild(newTextAreaElement);
-        return; 
-    };
-
     if (sectionName === 'requiredAssignments') {
         requiredAssignmentsCount ++;
         var newTextAreaElement = document.createElement('textarea');
@@ -141,19 +98,6 @@ function addLine(event) {
         var requiredAssignmentsDiv = document.getElementById('required-assignment-section');
         requiredAssignmentsDiv.appendChild(newTextAreaElement);
         requiredAssignmentsDiv.appendChild(newDateTimeElement);
-        return; 
-    };
-
-    if (sectionName === 'optionalAssignments') {
-        optionalAssignmentsCount ++;
-        var newTextAreaElement = document.createElement('textarea');
-        newTextAreaElement.setAttribute('id', 'optionalAssignment' + optionalAssignmentsCount);
-        var newDateTimeElement = document.createElement('input');
-        newDateTimeElement.setAttribute('type', 'datetime-local');
-        newDateTimeElement.setAttribute('id', 'optAssignmentDatetimePicker' + optionalAssignmentsCount);
-        var optionalAssignmentsDiv = document.getElementById('optional-assignment-section');
-        optionalAssignmentsDiv.appendChild(newTextAreaElement);
-        optionalAssignmentsDiv.appendChild(newDateTimeElement);
         return; 
     };
 };
