@@ -32,6 +32,7 @@ function getRequiredAssignmentsData() {
     };
 
     return requiredAssignmentsContent;
+    // console.log("requiredAssignmentContent sent out from function");
 }
 
 
@@ -45,6 +46,7 @@ function download(event) {
 
     const requiredResources = getRequiredResourcesData();
     const requiredAssignments = getRequiredAssignmentsData();
+    // console.log(requiredAssignments + "was recieved in main function");
 
     const filename = formData.get('filename');
     const filecontent = formData.get('content');
@@ -59,7 +61,7 @@ function download(event) {
                   + headingDashes + "Resources" + headingDashes + '\n'
                   + requiredResources + '\n'
                   + headingDashes + "Assignments" + headingDashes + '\n'
-                  requiredAssignments + '\n'
+                  + requiredAssignments + '\n'
                   + hRule;
 
 
