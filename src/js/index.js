@@ -1,105 +1,117 @@
-var requiredResourcesCount = 0;
-var optionalResourcesCount = 0;
-var requiredAssignmentsCount = 0;
-var optionalAssignmentsCount = 0;
+import './general';
 
-var hRule = "_________________________________________________________" + "\n"
-var headingDashes = " ----- "
+class TodoListCreator {
+    constructor()
+    {
+        this.resourcesCount = 0;
+        this.assignmentCount = 0;
+        this.$form = document.getElementById("downloadForm");
+        this.$resourceButton = document.getElementById("resourceButton");
+        this.$assignmentButton = document.getElementById("assignmentButton");
 
+        this.hRule = "_________________________________________________________" 
+        this.headingDashes = " ----- "
 
-function getRequiredResourcesData() {
-    let requiredResourcesContent = '';
+        this.download = this.download.bind(this);
+        this.$form.addEventListener("submit", this.download);
 
-    for (let i = 1; i <= requiredResourcesCount; i++) {
-        const requiredResourceLine = document.getElementById('requiredResource' + i);
-        requiredResourcesContent += "-" + requiredResourceLine.value;
-        requiredResourcesContent += '\n';    
-    };
+        this.addLine = this.addLine.bind(this);
+        this.$resourceButton.addEventListener("click", this.addLine);
+        this.$assignmentButton.addEventListener("click", this.addLine);
+    }
 
-    return requiredResourcesContent;
-}
+    getResourcesData() {
+        let resourcesContent = '';
 
-function getRequiredAssignmentsData() {
-    let requiredAssignmentsContent = '';
+        for (let i = 1; i <= this.resourcesCount; i++) {
+            const resourceLine = document.getElementById('resource' + i);
+            resourcesContent += "-" + resourceLine.value;
+            resourcesContent += '\n';    
+        };
+
+        return resourcesContent;
+    }
+
+    getassignmentsData() {
+        let assignmentsContent = '';
+        
+        for (let i = 1; i <= this.assignmentCount; i++) {
+            const assignmentLine = document.getElementById('assignment' + i);
+            const assignmentDateLine = document.getElementById('assignmentDatetimePicker' + i);
+            const date = new Date(assignmentDateLine.value);
+            const dateString = date.toLocaleDateString('en-us', {year:"numeric", month:"numeric", day:"numeric", hour:'numeric', minute:"numeric"});
+            assignmentsContent += "-" + dateString + ": " + assignmentLine.value;
+            assignmentsContent += '\n';    
+        };
     
-    for (let i = 1; i <= requiredAssignmentsCount; i++) {
-        const requiredAssignmentLine = document.getElementById('requiredAssignment' + i);
-        const requiredAssignmentDateLine = document.getElementById('reqdAssignmentDatetimePicker' + i);
-        const date = new Date(requiredAssignmentDateLine.value);
-        const dateString = date.toLocaleDateString('en-us', {year:"numeric", month:"numeric", day:"numeric", hour:'numeric', minute:"numeric"});
-        requiredAssignmentsContent += "-" + dateString + ": " + requiredAssignmentLine.value;
-        requiredAssignmentsContent += '\n';    
-    };
+        return assignmentsContent;
+        // console.log("requiredAssignmentContent sent out from function");
+    }
 
-    return requiredAssignmentsContent;
-    // console.log("requiredAssignmentContent sent out from function");
+    download(event) {
+        event.preventDefault();
+    
+        const formElement = document.getElementById('downloadForm');
+        const formData = new FormData(formElement);
+    
+        const resources = this.getResourcesData();
+        const assignments = this.getassignmentsData();
+        // console.log(assignments + "was recieved in main function");
+    
+        const filename = formData.get('filename');
+        const filecontent = formData.get('content');
+        const selectedclass = formData.get('classlist');
+        if (selectedclass === "" ) {
+            alert('You need to select a class!');
+            return false;
+        };
+    
+    
+        const content = this.hRule + "\n" + selectedclass + '\n' + this.hRule + "\n" 
+                      + this.headingDashes + "Resources" + this.headingDashes + '\n'
+                      + resources + '\n'
+                      + this.headingDashes + "Assignments" + this.headingDashes + '\n'
+                      + assignments + '\n'
+                      + this.hRule;
+    
+    
+        let element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+        element.setAttribute('download', filename);
+      
+        element.style.display = 'none';
+        document.body.appendChild(element);
+      
+        element.click();
+      
+        document.body.removeChild(element);
+      }
+
+      addLine(event) {
+        const sectionName = event.target.id;
+    
+        if (sectionName === 'resourceButton') {
+            this.resourcesCount ++;
+            let newTextAreaElement = document.createElement('textarea');
+            newTextAreaElement.setAttribute('id', 'resource' + this.resourcesCount);
+            let resourcesDiv = document.getElementById('resource-section');
+            resourcesDiv.appendChild(newTextAreaElement);
+            return; 
+        };
+    
+        if (sectionName === 'assignmentButton') {
+            this.assignmentCount ++;
+            let newTextAreaElement = document.createElement('textarea');
+            newTextAreaElement.setAttribute('id', 'assignment' + this.assignmentCount);
+            let newDateTimeElement = document.createElement('input');
+            newDateTimeElement.setAttribute('type', 'datetime-local');
+            newDateTimeElement.setAttribute('id', 'assignmentDatetimePicker' + this.assignmentCount);
+            let assignmentsDiv = document.getElementById('assignment-section');
+            assignmentsDiv.appendChild(newTextAreaElement);
+            assignmentsDiv.appendChild(newDateTimeElement);
+            return; 
+        };
+      }
 }
 
-
-
-
-function download(event) {
-    event.preventDefault();
-
-    const formElement = document.getElementById('downloadform');
-    const formData = new FormData(formElement);
-
-    const requiredResources = getRequiredResourcesData();
-    const requiredAssignments = getRequiredAssignmentsData();
-    // console.log(requiredAssignments + "was recieved in main function");
-
-    const filename = formData.get('filename');
-    const filecontent = formData.get('content');
-    const selectedclass = formData.get('classlist');
-    if (selectedclass === "" ) {
-        alert('You need to select a class!');
-        return false;
-    };
-
-
-    const content = hRule + selectedclass + '\n' + hRule 
-                  + headingDashes + "Resources" + headingDashes + '\n'
-                  + requiredResources + '\n'
-                  + headingDashes + "Assignments" + headingDashes + '\n'
-                  + requiredAssignments + '\n'
-                  + hRule;
-
-
-
-    var element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
-    element.setAttribute('download', filename);
-  
-    element.style.display = 'none';
-    document.body.appendChild(element);
-  
-    element.click();
-  
-    document.body.removeChild(element);
-  }
-
-function addLine(event) {
-    const sectionName = event.target.id;
-
-    if (sectionName === 'requiredResources') {
-        requiredResourcesCount ++;
-        var newTextAreaElement = document.createElement('textarea');
-        newTextAreaElement.setAttribute('id', 'requiredResource' + requiredResourcesCount);
-        var requiredResourcesDiv = document.getElementById('required-resource-section');
-        requiredResourcesDiv.appendChild(newTextAreaElement);
-        return; 
-    };
-
-    if (sectionName === 'requiredAssignments') {
-        requiredAssignmentsCount ++;
-        var newTextAreaElement = document.createElement('textarea');
-        newTextAreaElement.setAttribute('id', 'requiredAssignment' + requiredAssignmentsCount);
-        var newDateTimeElement = document.createElement('input');
-        newDateTimeElement.setAttribute('type', 'datetime-local');
-        newDateTimeElement.setAttribute('id', 'reqdAssignmentDatetimePicker' + requiredAssignmentsCount);
-        var requiredAssignmentsDiv = document.getElementById('required-assignment-section');
-        requiredAssignmentsDiv.appendChild(newTextAreaElement);
-        requiredAssignmentsDiv.appendChild(newDateTimeElement);
-        return; 
-    };
-};
+window.onload = () => {new TodoListCreator();}
