@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Class Todo Creator</title>
-	<meta name="description" content="contains a todo text file creator" />
+    <meta charset="UTF-8">
+    <title>Class Todo Creator</title>
+	<!-- <meta name="description" content="contains a todo text file creator" />
 	<meta name="keywords" content="text file, txt, create, creator, generator, text file generator, todo list" />
-	<meta name="author" content="Charlese Muchmore" />
+	<meta name="author" content="Charlese Muchmore" /> -->
+    <meta name="viewport" content="width=device-width,initial-scale=1"> 
 </head>
 <body>
-    <form id="downloadform" onsubmit="download(event)">
+    <form id="downloadForm">
         <!--File name entry field-->
         <h5>Filename</h5>
         <input type="text" name="filename" value="Enter filename here" class="filename-input">
@@ -34,15 +36,15 @@
         </select>
 
         <!--Resources input-->
-        <div id="required-resource-section" class="section-container">
+        <div id="resource-section" class="section-container">
             <h5>Resources</h5>
-            <button type='button' class="plus-button" id="requiredResources" onclick="addLine(event)">+</button>
+            <button type='button' class="plus-button" id="resourceButton">+</button>
         </div>
 
         <!--Assignments input-->
-        <div id="required-assignment-section" class="section-container">
+        <div id="assignment-section" class="section-container">
             <h5>Assignments</h5>
-            <button type='button' class="plus-button" id="requiredAssignments" onclick="addLine(event)">+</button>
+            <button type='button' class="plus-button" id="assignmentButton">+</button>
         </div>
 
         <!--Submit button-->

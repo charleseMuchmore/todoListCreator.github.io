@@ -72,7 +72,7 @@ module.exports = {
     plugins: [
       new htmlWebpackPlugin({
         template: path.resolve(__dirname, "./src/index.html"),
-        chunks: ["home"],
+        chunks: ["index"],
         inject: "body",
         filename: "index.html",
       }),
