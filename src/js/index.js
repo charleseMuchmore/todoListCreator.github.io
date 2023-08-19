@@ -9,8 +9,8 @@ class TodoListCreator {
         this.$resourceButton = document.getElementById("resourceButton");
         this.$assignmentButton = document.getElementById("assignmentButton");
 
-        this.hRule = "_________________________________________________________" 
-        this.headingDashes = " ----- "
+        this.hRule = "_________________________________________________________" + "\n";
+        this.headingDashes = " ----- ";
 
         this.download = this.download.bind(this);
         this.$form.addEventListener("submit", this.download);
@@ -67,11 +67,11 @@ class TodoListCreator {
         };
     
     
-        const content = this.hRule + "\n" + selectedclass + '\n' + this.hRule + "\n" 
+        const content = this.hRule + selectedclass + '\n' + this.hRule 
                       + this.headingDashes + "Resources" + this.headingDashes + '\n'
                       + resources + '\n'
                       + this.headingDashes + "Assignments" + this.headingDashes + '\n'
-                      + assignments + '\n'
+                      + assignments 
                       + this.hRule;
     
     
