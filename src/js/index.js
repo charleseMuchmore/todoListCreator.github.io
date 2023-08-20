@@ -51,15 +51,13 @@ class TodoListCreator {
     download(event) {
         event.preventDefault();
     
-        const formElement = document.getElementById('downloadForm');
-        const formData = new FormData(formElement);
+        const formData = new FormData(this.$form);
     
         const resources = this.getResourcesData();
         const assignments = this.getassignmentsData();
-        // console.log(assignments + "was recieved in main function");
     
-        const filename = formData.get('filename');
-        const filecontent = formData.get('content');
+        const filename = formData.get('filename') + ".txt";
+        // const filecontent = formData.get('content');
         const selectedclass = formData.get('classlist');
         if (selectedclass === "" ) {
             alert('You need to select a class!');
@@ -73,7 +71,6 @@ class TodoListCreator {
                       + this.headingDashes + "Assignments" + this.headingDashes + '\n'
                       + assignments 
                       + this.hRule;
-    
     
         let element = document.createElement('a');
         element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
