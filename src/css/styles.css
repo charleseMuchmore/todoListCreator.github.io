@@ -3,14 +3,14 @@ form * {
     margin: 10px;
   }
 
-body {
+/* body {
   display: flex;
-  background-color: #E3F6FF;
+  background-color: #fafdff;
   text-align: center;
   justify-content: center;
   margin-top: 5%;
   align-items: center;
-}
+} */
 
 h5 {
   font-family: sans-serif;

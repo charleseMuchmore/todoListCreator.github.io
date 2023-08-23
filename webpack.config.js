@@ -23,7 +23,7 @@ module.exports = {
     entry: {
       index: './src/js/index.js',
       settings: './src/js/settings.js',
-      about: './src/js/about.js',
+      // about: './src/js/about.js',
     },
     output: {
       path: path.resolve(__dirname, "dist"),
@@ -84,12 +84,12 @@ module.exports = {
         inject: "body",
         filename: "settings.html",
       }),
-      new htmlWebpackPlugin({
-        template: path.resolve(__dirname, "./src/about.html"),
-        chunks: ["about"],
-        inject: "body",
-        filename: "about.html",
-      }),
+      // new htmlWebpackPlugin({
+      //   template: path.resolve(__dirname, "./src/about.html"),
+      //   chunks: ["about"],
+      //   inject: "body",
+      //   filename: "about.html",
+      // }),
       // new copyPlugin({
       //   patterns: [
       //     {
