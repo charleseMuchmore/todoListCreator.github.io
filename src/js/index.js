@@ -58,7 +58,7 @@ class TodoListCreator {
         const assignments = this.getassignmentsData();
         // console.log(assignments + "was recieved in main function");
     
-        const filename = formData.get('filename');
+        const filename = formData.get('filename') + ".txt";
         const filecontent = formData.get('content');
         const selectedclass = formData.get('classlist');
         if (selectedclass === "" ) {
