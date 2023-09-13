@@ -62,7 +62,7 @@ bower_components
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
-dist
+
 
 # Dependency directories
 node_modules/
@@ -90,6 +90,12 @@ typings/
 # dotenv environment variables file
 .env
 
-
+# other
+src
+.env
+.env.example
+package-lock.json
+package.json
+webpack.config.js
 
 # End of https://www.gitignore.io/api/node,macos
