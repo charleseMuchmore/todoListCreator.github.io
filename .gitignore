@@ -91,7 +91,7 @@ typings/
 .env
 
 # other
-src
+src/
 .env
 .env.example
 package-lock.json
