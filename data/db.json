@@ -1,0 +1,20 @@
+{
+    "classes": [
+      {
+        "id": 1,
+        "course": "PE114",
+        "courseName": "Returning PE",
+        "courseTime": ["async"], 
+        "instructor": "Patrick O'Connor",
+        "displayName": "Physical Education"
+      },
+      {
+        "id": 2,
+        "course": "CS295N",
+        "courseName": "Web Development 1: ASP.NET",
+        "courseTime": ["sync", "M/W 10-11:50"], 
+        "instructor": "Brian Bird",
+        "displayName": "ASP.NET"
+      }
+    ]
+  }

@@ -8,6 +8,7 @@ class TodoListCreator {
         this.$form = document.getElementById("downloadForm");
         this.$resourceButton = document.getElementById("resourceButton");
         this.$assignmentButton = document.getElementById("assignmentButton");
+        this.$resourcesSection = document.getElementById("resource-section");
 
         this.hRule = "_________________________________________________________" + "\n";
         this.headingDashes = " ----- ";
@@ -51,15 +52,13 @@ class TodoListCreator {
     download(event) {
         event.preventDefault();
     
-        const formElement = document.getElementById('downloadForm');
-        const formData = new FormData(formElement);
+        const formData = new FormData(this.$form);
     
         const resources = this.getResourcesData();
         const assignments = this.getassignmentsData();
-        // console.log(assignments + "was recieved in main function");
     
-        const filename = formData.get('filename');
-        const filecontent = formData.get('content');
+        const filename = document.getElementById("filename").value + ".txt";
+        // const filecontent = formData.get('content');
         const selectedclass = formData.get('classlist');
         if (selectedclass === "" ) {
             alert('You need to select a class!');
@@ -74,7 +73,6 @@ class TodoListCreator {
                       + assignments 
                       + this.hRule;
     
-    
         let element = document.createElement('a');
         element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
         element.setAttribute('download', filename);
@@ -87,31 +85,47 @@ class TodoListCreator {
         document.body.removeChild(element);
       }
 
-      addLine(event) {
+    addLine(event) {
         const sectionName = event.target.id;
-    
+
         if (sectionName === 'resourceButton') {
             this.resourcesCount ++;
-            let newTextAreaElement = document.createElement('textarea');
-            newTextAreaElement.setAttribute('id', 'resource' + this.resourcesCount);
-            let resourcesDiv = document.getElementById('resource-section');
-            resourcesDiv.appendChild(newTextAreaElement);
+
+            let id = 'resource' + this.resourcesCount;
+            let newElement = document.createElement('div');
+            newElement.setAttribute('class', 'row');
+            newElement.setAttribute('class', 'input-area');
+            let newTextInput = this.createTextInput("Resource", id);
+            newElement.innerHTML = newTextInput;
+            this.$resourcesSection.appendChild(newElement);
             return; 
         };
-    
+
         if (sectionName === 'assignmentButton') {
             this.assignmentCount ++;
-            let newTextAreaElement = document.createElement('textarea');
-            newTextAreaElement.setAttribute('id', 'assignment' + this.assignmentCount);
+            let newTextInput = document.createElement('textarea');
+            newTextInput.setAttribute('id', 'assignment' + this.assignmentCount);
             let newDateTimeElement = document.createElement('input');
             newDateTimeElement.setAttribute('type', 'datetime-local');
             newDateTimeElement.setAttribute('id', 'assignmentDatetimePicker' + this.assignmentCount);
             let assignmentsDiv = document.getElementById('assignment-section');
-            assignmentsDiv.appendChild(newTextAreaElement);
+            assignmentsDiv.appendChild(newTextInput);
             assignmentsDiv.appendChild(newDateTimeElement);
             return; 
         };
-      }
+    }
+
+    createTextInput(placeholderText, id) {
+        return `
+        <div class="col-sm-1"></div>
+        <div class="form-group col-sm-9">
+            <input type="text" placeholder="${placeholderText}" class="form-control" id="${id}">
+        </div>
+        <div class="col-sm-1"></div>
+        `
+    }
+
+
 }
 
 window.onload = () => {new TodoListCreator();}
