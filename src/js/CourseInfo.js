@@ -2,11 +2,11 @@ import './general';
 
 class CourseInfo {
 
-    constructor(CRN, courseNum, courseName, instructor, schedule, assignments, resources) {
+    constructor(courseCode, courseName, instructor, schedule, assignments, resources) {
 
     }
 
-    constructor(CRN, courseNum, courseName, instructor, schedule) {
+    constructor(courseCode, courseName, instructor, schedule) {
 
     }
 
