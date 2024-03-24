@@ -1,20 +1,28 @@
 {
-    "classes": [
-      {
-        "id": 1,
-        "course": "PE114",
-        "courseName": "Returning PE",
-        "courseTime": ["async"], 
-        "instructor": "Patrick O'Connor",
-        "displayName": "Physical Education"
-      },
-      {
-        "id": 2,
-        "course": "CS295N",
-        "courseName": "Web Development 1: ASP.NET",
-        "courseTime": ["sync", "M/W 10-11:50"], 
-        "instructor": "Brian Bird",
-        "displayName": "ASP.NET"
-      }
-    ]
-  }
+  "courses": [
+    {
+      "id": 1,
+      "courseCode": "CS280PR",
+      "credits": "4",
+      "courseName": "Co-op Ed: Computer Programming",
+      "courseSchedule": ["async"], 
+      "instructor": "Gerry Meenaghan"
+    },
+    {
+      "id": 2,
+      "course": "CS275",
+      "credits": "4",
+      "courseName": "Database Systems and Modeling",
+      "courseTime": ["sync", "Tu/Th 2-3:50"], 
+      "instructor": "Lindy Stewart"
+    },
+    {
+      "id": 3,
+      "course": "CS297",
+      "credits": "4",
+      "courseName": "Programming Capstone",
+      "courseTime": ["sync", "M-Th 2-3:50"], 
+      "instructor": "Brian Bird"
+    }
+  ]
+}
