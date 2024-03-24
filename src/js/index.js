@@ -1,7 +1,8 @@
 import './general';
-import './FileFormater';
-import './CourseInfo';
-import './services/dataManagement/Courses';
+import FileFormater from './FileFormater';
+import CourseInfo from './CourseInfo';
+import Courses from './services/dataManagement/Courses.js';
+import axios from 'axios';
 
 class TodoListCreator {
     constructor()
@@ -9,6 +10,9 @@ class TodoListCreator {
         this.resourcesCount = 0;
         this.assignmentCount = 0;
         this.$form = document.getElementById("downloadForm");
+        this.$classList = document.getElementById("classlist");
+        this.loadCoursesIntoSelect();
+
         this.$resourceButton = document.getElementById("resourceButton");
         this.$assignmentButton = document.getElementById("assignmentButton");
         this.$resourcesSection = document.getElementById("resource-section");
@@ -19,9 +23,27 @@ class TodoListCreator {
         this.download = this.download.bind(this);
         this.$form.addEventListener("submit", this.download);
 
-        this.addLine = this.addLine.bind(this);
+        this.loadCoursesIntoSelect = this.loadCoursesIntoSelect.bind(this);
+
         this.$resourceButton.addEventListener("click", this.addLine);
         this.$assignmentButton.addEventListener("click", this.addLine);
+
+    }
+
+    async loadCoursesIntoSelect() {
+        const c = new Courses();
+        let courses = await c.fetchCourses();
+        courses = courses[0];
+        for (let i = 0; i < courses.length; i++) {
+            this.$classList.innerHTML += this.generateCourseOption(courses[i]);
+        }
+    }
+
+    generateCourseOption(course) {
+        console.log(course);
+        return `
+        <option value="${course.courseCode} - ${course.courseName} - ${course.courseSchedule}, ${course.instructor}">${course.courseName}</option>
+        `
     }
 
     getResourcesData() {
@@ -55,24 +77,32 @@ class TodoListCreator {
     download(event) {
         event.preventDefault();
     
+        // const c = new Courses();
+        // let course = c.fetchCourseByCode("CS280PR");
+        // const courseInfo = CourseInfo();
+        // courseInfo.newFromJSON(course.data[0]);
+
         const formData = new FormData(this.$form);
+        // const response = await axios.get(`${process.env.SERVER_URL}`)
+        // console.log(response);
     
         const resources = this.getResourcesData();
         const assignments = this.getassignmentsData();
     
         const filename = document.getElementById("filename").value + ".txt";
         // const filecontent = formData.get('content');
-        const selectedclass = formData.get('classlist');
-        if (selectedclass === "" ) {
-            alert('You need to select a class!');
-            return false;
-        };
-        //"PE114 - Returning PE - (async), O'Connor"
+        // const selectedclass = formData.get('classlist');
+        // if (selectedclass === "" ) {
+        //     alert('You need to select a class!');
+        //     return false;
+        // };
+        // let selecteclass = "hi";
+        // //"PE114 - Returning PE - (async), O'Connor"
 
-        const courseInfo = new CourseInfo(); 
+        // const courseInfo = new CourseInfo(); 
     
-        const fileFormatter = new FileFormatter(filename);
-        fileFormatter.generateDownload();
+        // const fileFormater = FileFormater(filename);
+        // fileFormater.foo();
       }
 
     addLine(event) {

@@ -1,19 +1,28 @@
 {
-  "posts": [
+  "courses": [
     {
       "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
+      "courseCode": "CS280PR",
+      "credits": "4",
+      "courseName": "Co-op Ed: Computer Programming",
+      "courseSchedule": ["async"], 
+      "instructor": "Gerry Meenaghan"
+    },
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "id": 2,
+      "course": "CS275",
+      "credits": "4",
+      "courseName": "Database Systems and Modeling",
+      "courseTime": ["sync", "Tu/Th 2-3:50"], 
+      "instructor": "Lindy Stewart"
+    },
+    {
+      "id": 3,
+      "course": "CS297",
+      "credits": "4",
+      "courseName": "Programming Capstone",
+      "courseTime": ["sync", "M-Th 2-3:50"], 
+      "instructor": "Brian Bird"
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }

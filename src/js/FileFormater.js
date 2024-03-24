@@ -3,14 +3,16 @@ import './general';
 class FileFormater {
     constructor(formData, resources, assignments, filename) {
 
-        this.selectedclass = formData.get('classlist');
-        if (selectedclass === "" ) {
-            alert('You need to select a class!');
-            return false;
-        };
+        // this.selectedclass = formData.get('classlist');
+        // if (selectedclass === "" ) {
+        //     alert('You need to select a class!');
+        //     return false;
+        // };
+        this.selectedclass = "hi";
         this.hRule = "_________________________________________________________" + "\n";
         this.headingDashes = " ----- ";
         //content
+        this.foo();
 
     }
 
@@ -34,3 +36,5 @@ class FileFormater {
         document.body.removeChild(element);
     }
 }
+
+export default FileFormater;

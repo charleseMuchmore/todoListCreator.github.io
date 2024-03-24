@@ -2,17 +2,31 @@ import axios from 'axios';
 
 class Courses { 
     //this class should interface with the db.json for courses
-    //will need to set up an instance of db.json on a server for this to work 
-    //then will need to use axios to do http requests to the server
     
     constructor() {
         this.courses = [];
     }
 
-    fetchCourses() {
-        //Todo:
+    async fetchCourses() {
         //get the courses from db.json
+        const response = await axios.get(`http://localhost:5000/courses`);
+        //Todo: get that url using .env 
+        
         //store at this.courses
+        const updatedCourses = [
+            ...this.courses,
+            response.data
+        ];
+        this.courses = updatedCourses;
+        return this.courses;
+    }
+
+    async fetchCourseByCode(code) {
+        //get the courses from db.json
+        const response = await axios.get(`http://localhost:5000/courses?courseCode=${code}`);
+        //Todo: get that url using .env 
+        
+        return response;
     }
 
     addCourse() {
