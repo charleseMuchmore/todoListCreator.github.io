@@ -1,4 +1,6 @@
 import './general';
+import './FileFormatter';
+import './CourseInfo';
 
 class TodoListCreator {
     constructor()
@@ -64,25 +66,12 @@ class TodoListCreator {
             alert('You need to select a class!');
             return false;
         };
+        //"PE114 - Returning PE - (async), O'Connor"
+
+        const courseInfo = new CourseInfo(); 
     
-    
-        const content = this.hRule + selectedclass + '\n' + this.hRule 
-                      + this.headingDashes + "Resources" + this.headingDashes + '\n'
-                      + resources + '\n'
-                      + this.headingDashes + "Assignments" + this.headingDashes + '\n'
-                      + assignments 
-                      + this.hRule;
-    
-        let element = document.createElement('a');
-        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
-        element.setAttribute('download', filename);
-      
-        element.style.display = 'none';
-        document.body.appendChild(element);
-      
-        element.click();
-      
-        document.body.removeChild(element);
+        const fileFormatter = new FileFormatter(filename);
+        fileFormatter.generateDownload();
       }
 
     addLine(event) {
