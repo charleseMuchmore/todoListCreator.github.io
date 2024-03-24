@@ -1,6 +1,6 @@
 import './general';
 
-class FileFormatter {
+class FileFormater {
     constructor(formData, resources, assignments, filename) {
 
         this.selectedclass = formData.get('classlist');

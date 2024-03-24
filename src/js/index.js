@@ -1,5 +1,5 @@
 import './general';
-import './FileFormatter';
+import './FileFormater';
 import './CourseInfo';
 
 class TodoListCreator {
