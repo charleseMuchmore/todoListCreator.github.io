@@ -1,11 +1,8 @@
 import './general';
+import axios from './axios'; //this might not be the correct import statement for axios
 
 class CourseInfo {
-    constructor(courseCode, credits, courseName, schedule, instructor, resources, assignments) {
-
-    }
-
-    constructor(courseCode, courseName, instructor, schedule) {
+    constructor(courseCode, credits, courseName, schedule, instructor) {
 
     }
 
@@ -17,19 +14,7 @@ class CourseInfo {
         
     }
 
-    constructor(formData, resources, assignments, filename) {
-
-        this.selectedclass = formData.get('classlist');
-        if (selectedclass === "" ) {
-            alert('You need to select a class!');
-            return false;
-        };
-        //content
-
-    }
-
     static newFromJSON(theJSON) {
-
         //from the json create a new instance of courseInfo
     }
 }

@@ -8,6 +8,8 @@ class FileFormater {
             alert('You need to select a class!');
             return false;
         };
+        this.hRule = "_________________________________________________________" + "\n";
+        this.headingDashes = " ----- ";
         //content
 
     }
