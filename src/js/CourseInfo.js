@@ -1,5 +1,5 @@
 import './general';
-import axios from './axios'; //this might not be the correct import statement for axios
+// import axios from './axios'; //this might not be the correct import statement for axios
 
 class CourseInfo {
     constructor(courseCode, credits, courseName, schedule, instructor) {

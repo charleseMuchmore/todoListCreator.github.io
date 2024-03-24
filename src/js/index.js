@@ -1,6 +1,7 @@
 import './general';
 import './FileFormater';
 import './CourseInfo';
+import './services/dataManagement/Courses';
 
 class TodoListCreator {
     constructor()
