@@ -1,23 +1,19 @@
 import './general';
 
 class FileFormater {
-    constructor(formData, resources, assignments, filename) {
-
-        // this.selectedclass = formData.get('classlist');
-        // if (selectedclass === "" ) {
-        //     alert('You need to select a class!');
-        //     return false;
-        // };
-        this.selectedclass = "hi";
+    constructor(courseInfo, resources, assignments, filename) {
+        this.courseInfo = courseInfo;
+        this.resources = resources;
+        this.assignments = assignments;
+        this.filename = filename;
         this.hRule = "_________________________________________________________" + "\n";
         this.headingDashes = " ----- ";
         //content
-        this.foo();
 
     }
 
     foo() {
-        const content = this.hRule + selectedclass + '\n' + this.hRule 
+        const content = this.generateCourseHeader() +
         + this.headingDashes + "Resources" + this.headingDashes + '\n'
         + resources + '\n'
         + this.headingDashes + "Assignments" + this.headingDashes + '\n'
@@ -34,6 +30,11 @@ class FileFormater {
         element.click();
 
         document.body.removeChild(element);
+    }
+
+    generateCourseHeader() {
+        const c = this.courseInfo;
+        return this.hRule + `${c.courseCode} (${c.credits}) ${c.courseName} - ${c.courseSchedule} - ${c.instructor}`+ '\n' + this.hRule;
     }
 }
 

@@ -10,18 +10,18 @@
     },
     {
       "id": 2,
-      "course": "CS275",
+      "courseCode": "CS275",
       "credits": "4",
       "courseName": "Database Systems and Modeling",
-      "courseTime": ["sync", "Tu/Th 2-3:50"], 
+      "courseSchedule": ["sync", "Tu/Th 2-3:50"], 
       "instructor": "Lindy Stewart"
     },
     {
       "id": 3,
-      "course": "CS297",
+      "courseCode": "CS297",
       "credits": "4",
       "courseName": "Programming Capstone",
-      "courseTime": ["sync", "M-Th 2-3:50"], 
+      "courseSchedule": ["sync", "M-Th 2-3:50"], 
       "instructor": "Brian Bird"
     }
   ]

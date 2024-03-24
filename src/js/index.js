@@ -40,9 +40,11 @@ class TodoListCreator {
     }
 
     generateCourseOption(course) {
-        console.log(course);
+        // return `
+        // <option value="${course.courseCode} - ${course.courseName} - ${course.courseSchedule}, ${course.instructor}">${course.courseName}</option>
+        // `
         return `
-        <option value="${course.courseCode} - ${course.courseName} - ${course.courseSchedule}, ${course.instructor}">${course.courseName}</option>
+        <option value="${course.courseCode}">${course.courseName}</option>
         `
     }
 
@@ -76,34 +78,36 @@ class TodoListCreator {
 
     download(event) {
         event.preventDefault();
-    
-        // const c = new Courses();
-        // let course = c.fetchCourseByCode("CS280PR");
-        // const courseInfo = CourseInfo();
-        // courseInfo.newFromJSON(course.data[0]);
 
         const formData = new FormData(this.$form);
-        // const response = await axios.get(`${process.env.SERVER_URL}`)
-        // console.log(response);
     
         const resources = this.getResourcesData();
         const assignments = this.getassignmentsData();
     
         const filename = document.getElementById("filename").value + ".txt";
         // const filecontent = formData.get('content');
-        // const selectedclass = formData.get('classlist');
-        // if (selectedclass === "" ) {
-        //     alert('You need to select a class!');
-        //     return false;
-        // };
-        // let selecteclass = "hi";
-        // //"PE114 - Returning PE - (async), O'Connor"
+        const selectedCourseCode = formData.get('classlist'); //should be a courseCode
+        if (selectedCourseCode === "" ) {
+            alert('You need to select a class!');
+            return false;
+        };
 
-        // const courseInfo = new CourseInfo(); 
+        const courseInfo = new CourseInfo(selectedCourseCode); 
     
-        // const fileFormater = FileFormater(filename);
-        // fileFormater.foo();
+        const fileFormater = new FileFormater(courseInfo, resources, assignments, filename);
+        console.log(fileFormater);
+        fileFormater.foo();
       }
+
+    createTextInput(placeholderText, id) {
+        return `
+        <div class="col-sm-1"></div>
+        <div class="form-group col-sm-9">
+            <input type="text" placeholder="${placeholderText}" class="form-control" id="${id}">
+        </div>
+        <div class="col-sm-1"></div>
+        `
+    }
 
     addLine(event) {
         const sectionName = event.target.id;
@@ -135,15 +139,7 @@ class TodoListCreator {
         };
     }
 
-    createTextInput(placeholderText, id) {
-        return `
-        <div class="col-sm-1"></div>
-        <div class="form-group col-sm-9">
-            <input type="text" placeholder="${placeholderText}" class="form-control" id="${id}">
-        </div>
-        <div class="col-sm-1"></div>
-        `
-    }
+    
 
 
 }
