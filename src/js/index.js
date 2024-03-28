@@ -15,6 +15,7 @@ class TodoListCreator {
         this.$resourceButton = document.getElementById("resourceButton");
         this.$assignmentButton = document.getElementById("assignmentButton");
         this.$resourcesSection = document.getElementById("resource-section");
+        this.$assignmentsSection = document.getElementById("assignment-section");
         this.loadCoursesIntoSelect();
 
         this.download = this.download.bind(this);
@@ -27,12 +28,13 @@ class TodoListCreator {
 
     getResourcesData() {
         let resourcesContent = "";
-        //use regex to get a list of every div that has an id of resource(x)
+        //Note: this is not a great way to get the resources, 
+        //a possibly better alternative would be to use regex
+        //or somehow get all textarea elements in the resourcesSection div
         let resources = this.$resourcesSection.children;
 
         for (let i = 1; i <= resources.length - 1; i++) {
             const resourceLine = resources[i];
-            console.log(resourceLine);
             resourcesContent += "-" + resourceLine.value;
             resourcesContent += '\n'; 
         };
@@ -43,9 +45,14 @@ class TodoListCreator {
     getassignmentsData() {
         let assignmentsContent = '';
         
-        for (let i = 1; i <= this.assignmentCount; i++) {
-            const assignmentLine = document.getElementById('assignment' + i);
-            const assignmentDateLine = document.getElementById('assignmentDatetimePicker' + i);
+        let assignments = this.$assignmentsSection.children;
+        console.log(assignments)
+
+        for (let i = 1; i <= assignments.length - 1; i += 2) {
+            const assignmentLine = assignments[i];
+            const assignmentDateLine = assignments[i+1];
+            //Note: the method for getting the above data isn't great
+            //alternative solutions include regex or element type selection
             const date = new Date(assignmentDateLine.value);
             const dateString = date.toLocaleDateString('en-us', {year:"numeric", month:"numeric", day:"numeric", hour:'numeric', minute:"numeric"});
             assignmentsContent += "-" + dateString + ": " + assignmentLine.value;
@@ -81,7 +88,7 @@ class TodoListCreator {
     addLine(event) {
         const sectionName = event.target.id;
 
-        //this is a bit odd to me...
+        //Note: this is a bit odd to me...
         //for some reason resourcesCount is either undefined or NaN
         //this if statement corrects the issue
         //however I don't know why the issue exists
@@ -103,9 +110,13 @@ class TodoListCreator {
             console.log(this.resourcesCount);
             return; 
         };
+        
+        //this is similar to the other weird condition statement above
+        if (this.assignmentCount == undefined || this.assignmentCount == NaN)
+            this.assignmentCount = 0;
 
         if (sectionName === 'assignmentButton') {
-            this.assignmentCount ++;
+            this.assignmentCount += 1;
 
             let newTextInput = document.createElement('textarea');
             newTextInput.setAttribute('id', 'assignment' + this.assignmentCount);
