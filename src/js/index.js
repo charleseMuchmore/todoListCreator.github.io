@@ -27,16 +27,14 @@ class TodoListCreator {
 
     getResourcesData() {
         let resourcesContent = "";
+        //use regex to get a list of every div that has an id of resource(x)
+        let resources = this.$resourcesSection.children;
 
-        console.log(this.resourcesCount);
-        for (let i = 1; i <= this.resourcesCount; i++) {
-            // console.log(i);
-            const resourceLine = document.getElementById('resource' + i);
-            // console.log(resourceLine);
-            // console.log(resourceLine.value);
+        for (let i = 1; i <= resources.length - 1; i++) {
+            const resourceLine = resources[i];
+            console.log(resourceLine);
             resourcesContent += "-" + resourceLine.value;
             resourcesContent += '\n'; 
-            // console.log(resourcesContent);   
         };
 
         return resourcesContent;
@@ -102,6 +100,7 @@ class TodoListCreator {
 
             let resourcesDiv = document.getElementById('resource-section');
             resourcesDiv.appendChild(newTextInput);
+            console.log(this.resourcesCount);
             return; 
         };
 
