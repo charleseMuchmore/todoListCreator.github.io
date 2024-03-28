@@ -19,14 +19,6 @@ class CourseInfo {
         return courses[0];
     }
 
-    setAssignments() {
-
-    }
-
-    setResources() {
-        
-    }
-
     static async newFromJSON(courseCode) {       
         let courses = await this.getCourses();
 
@@ -41,6 +33,14 @@ class CourseInfo {
                     theObj.instructor);
             }
         }
+    }
+
+    setAssignments() {
+
+    }
+
+    setResources() {
+        
     }
 }
 

@@ -34,8 +34,6 @@ class FileFormater {
     }
 
     generateCourseHeader() {
-        const c = this.courseInfo;
-
         return (
         this.hRule + 
         this.courseInfo.courseCode + " (" + 

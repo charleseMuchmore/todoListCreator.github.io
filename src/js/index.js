@@ -46,7 +46,6 @@ class TodoListCreator {
         let assignmentsContent = '';
         
         let assignments = this.$assignmentsSection.children;
-        console.log(assignments)
 
         for (let i = 1; i <= assignments.length - 1; i += 2) {
             const assignmentLine = assignments[i];
@@ -101,13 +100,8 @@ class TodoListCreator {
             let newTextInput = document.createElement('textarea');
             newTextInput.setAttribute('id', 'resource' + this.resourcesCount);
 
-            // let newElement = document.createElement('div');
-            // newElement.setAttribute('class', 'row');
-            // newElement.setAttribute('class', 'input-area');
-
             let resourcesDiv = document.getElementById('resource-section');
             resourcesDiv.appendChild(newTextInput);
-            console.log(this.resourcesCount);
             return; 
         };
         
@@ -152,9 +146,6 @@ class TodoListCreator {
     }
 
     generateCourseOption(course) {
-        // return `
-        // <option value="${course.courseCode} - ${course.courseName} - ${course.courseSchedule}, ${course.instructor}">${course.courseName}</option>
-        // `
         return `
         <option value="${course.courseCode}">${course.courseName}</option>
         `
