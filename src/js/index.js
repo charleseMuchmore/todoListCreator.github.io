@@ -1,33 +1,42 @@
 import './general';
+import FileFormater from './FileFormater';
+import CourseInfo from './CourseInfo';
+import Courses from './services/dataManagement/Courses.js';
+import axios from 'axios';
 
 class TodoListCreator {
     constructor()
     {
         this.resourcesCount = 0;
         this.assignmentCount = 0;
+
         this.$form = document.getElementById("downloadForm");
+        this.$classList = document.getElementById("classlist");
         this.$resourceButton = document.getElementById("resourceButton");
         this.$assignmentButton = document.getElementById("assignmentButton");
         this.$resourcesSection = document.getElementById("resource-section");
-
-        this.hRule = "_________________________________________________________" + "\n";
-        this.headingDashes = " ----- ";
+        this.$assignmentsSection = document.getElementById("assignment-section");
+        this.loadCoursesIntoSelect();
 
         this.download = this.download.bind(this);
         this.$form.addEventListener("submit", this.download);
 
-        this.addLine = this.addLine.bind(this);
         this.$resourceButton.addEventListener("click", this.addLine);
         this.$assignmentButton.addEventListener("click", this.addLine);
+
     }
 
     getResourcesData() {
-        let resourcesContent = '';
+        let resourcesContent = "";
+        //Note: this is not a great way to get the resources, 
+        //a possibly better alternative would be to use regex
+        //or somehow get all textarea elements in the resourcesSection div
+        let resources = this.$resourcesSection.children;
 
-        for (let i = 1; i <= this.resourcesCount; i++) {
-            const resourceLine = document.getElementById('resource' + i);
+        for (let i = 1; i <= resources.length - 1; i++) {
+            const resourceLine = resources[i];
             resourcesContent += "-" + resourceLine.value;
-            resourcesContent += '\n';    
+            resourcesContent += '\n'; 
         };
 
         return resourcesContent;
@@ -36,9 +45,13 @@ class TodoListCreator {
     getassignmentsData() {
         let assignmentsContent = '';
         
-        for (let i = 1; i <= this.assignmentCount; i++) {
-            const assignmentLine = document.getElementById('assignment' + i);
-            const assignmentDateLine = document.getElementById('assignmentDatetimePicker' + i);
+        let assignments = this.$assignmentsSection.children;
+
+        for (let i = 1; i <= assignments.length - 1; i += 2) {
+            const assignmentLine = assignments[i];
+            const assignmentDateLine = assignments[i+1];
+            //Note: the method for getting the above data isn't great
+            //alternative solutions include regex or element type selection
             const date = new Date(assignmentDateLine.value);
             const dateString = date.toLocaleDateString('en-us', {year:"numeric", month:"numeric", day:"numeric", hour:'numeric', minute:"numeric"});
             assignmentsContent += "-" + dateString + ": " + assignmentLine.value;
@@ -46,68 +59,66 @@ class TodoListCreator {
         };
     
         return assignmentsContent;
-        // console.log("requiredAssignmentContent sent out from function");
     }
 
-    download(event) {
+    async download(event) {
         event.preventDefault();
-    
+
         const formData = new FormData(this.$form);
     
         const resources = this.getResourcesData();
         const assignments = this.getassignmentsData();
     
         const filename = document.getElementById("filename").value + ".txt";
-        // const filecontent = formData.get('content');
-        const selectedclass = formData.get('classlist');
-        if (selectedclass === "" ) {
+        const selectedCourseCode = formData.get('classlist'); 
+        if (selectedCourseCode === "" ) {
             alert('You need to select a class!');
             return false;
         };
-    
-    
-        const content = this.hRule + selectedclass + '\n' + this.hRule 
-                      + this.headingDashes + "Resources" + this.headingDashes + '\n'
-                      + resources + '\n'
-                      + this.headingDashes + "Assignments" + this.headingDashes + '\n'
-                      + assignments 
-                      + this.hRule;
-    
-        let element = document.createElement('a');
-        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
-        element.setAttribute('download', filename);
-      
-        element.style.display = 'none';
-        document.body.appendChild(element);
-      
-        element.click();
-      
-        document.body.removeChild(element);
+
+        let courseInfo = await CourseInfo.newFromJSON(selectedCourseCode); 
+
+        // console.log(resources);
+
+        const fileFormater = new FileFormater(courseInfo, resources, assignments, filename);
+        fileFormater.foo();
       }
 
     addLine(event) {
         const sectionName = event.target.id;
 
-        if (sectionName === 'resourceButton') {
-            this.resourcesCount ++;
+        //Note: this is a bit odd to me...
+        //for some reason resourcesCount is either undefined or NaN
+        //this if statement corrects the issue
+        //however I don't know why the issue exists
+        if (this.resourcesCount == undefined || this.resourcesCount == NaN)
+            this.resourcesCount = 0;
 
-            let id = 'resource' + this.resourcesCount;
-            let newElement = document.createElement('div');
-            newElement.setAttribute('class', 'row');
-            newElement.setAttribute('class', 'input-area');
-            let newTextInput = this.createTextInput("Resource", id);
-            newElement.innerHTML = newTextInput;
-            this.$resourcesSection.appendChild(newElement);
+        if (sectionName === 'resourceButton') {
+            this.resourcesCount += 1;
+            
+            let newTextInput = document.createElement('textarea');
+            newTextInput.setAttribute('id', 'resource' + this.resourcesCount);
+
+            let resourcesDiv = document.getElementById('resource-section');
+            resourcesDiv.appendChild(newTextInput);
             return; 
         };
+        
+        //this is similar to the other weird condition statement above
+        if (this.assignmentCount == undefined || this.assignmentCount == NaN)
+            this.assignmentCount = 0;
 
         if (sectionName === 'assignmentButton') {
-            this.assignmentCount ++;
+            this.assignmentCount += 1;
+
             let newTextInput = document.createElement('textarea');
             newTextInput.setAttribute('id', 'assignment' + this.assignmentCount);
+
             let newDateTimeElement = document.createElement('input');
             newDateTimeElement.setAttribute('type', 'datetime-local');
             newDateTimeElement.setAttribute('id', 'assignmentDatetimePicker' + this.assignmentCount);
+
             let assignmentsDiv = document.getElementById('assignment-section');
             assignmentsDiv.appendChild(newTextInput);
             assignmentsDiv.appendChild(newDateTimeElement);
@@ -125,7 +136,20 @@ class TodoListCreator {
         `
     }
 
+    async loadCoursesIntoSelect() {
+        const c = new Courses();
+        let courses = await c.fetchCourses();
+        courses = courses[0];
+        for (let i = 0; i < courses.length; i++) {
+            this.$classList.innerHTML += this.generateCourseOption(courses[i]);
+        }
+    }
 
+    generateCourseOption(course) {
+        return `
+        <option value="${course.courseCode}">${course.courseName}</option>
+        `
+    }
 }
 
 window.onload = () => {new TodoListCreator();}

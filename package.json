@@ -5,8 +5,10 @@
   "main": "index.html",
   "scripts": {
     "webpack": "webpack",
+    "start": "react-scripts start",
     "build": "webpack --config webpack.config.js",
-    "watch": "webpack serve --open"
+    "watch": "webpack serve --open",
+    "apiServer": "json-server --watch db.json --port 5000"
   },
   "devDependencies": {
     "@babel/cli": "^7.18.10",
@@ -17,7 +19,7 @@
     "css-loader": "^6.7.1",
     "dotenv": "^16.0.3",
     "html-webpack-plugin": "^5.5.0",
-    "json-server": "^0.17.1",
+    "json-server": "^0.17.4",
     "mini-css-extract-plugin": "^2.6.1",
     "purgecss-webpack-plugin": "^5.0.0",
     "sass": "^1.54.9",
@@ -30,6 +32,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "axios": "^1.6.8",
     "babel-loader": "^8.2.5",
     "bootstrap": "^5.2.1",
     "bootstrap-less": "^3.3.8",
