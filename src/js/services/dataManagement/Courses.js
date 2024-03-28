@@ -21,14 +21,6 @@ class Courses {
         return this.courses;
     }
 
-    async fetchCourseByCode(code) {
-        //get the courses from db.json
-        const response = await axios.get(`http://localhost:5000/courses?courseCode=${code}`);
-        //Todo: get that url using .env 
-                
-        return response;
-    }
-
     addCourse() {
         //Todo:
         //add the course to db.json

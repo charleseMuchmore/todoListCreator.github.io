@@ -1,8 +1,8 @@
 import './general';
 
 class FileFormater {
-    constructor(courseInfo, resources, assignments, filename) {
-        this.courseInfo = courseInfo;
+    constructor(cInfo, resources, assignments, filename) {
+        this.courseInfo = cInfo;
         this.resources = resources;
         this.assignments = assignments;
         this.filename = filename;
@@ -13,16 +13,17 @@ class FileFormater {
     }
 
     foo() {
-        const content = this.generateCourseHeader() +
+        const header = this.generateCourseHeader();
+        const content = header
         + this.headingDashes + "Resources" + this.headingDashes + '\n'
-        + resources + '\n'
+        + this.resources + '\n'
         + this.headingDashes + "Assignments" + this.headingDashes + '\n'
-        + assignments 
+        + this.assignments 
         + this.hRule;
 
         let element = document.createElement('a');
         element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
-        element.setAttribute('download', filename);
+        element.setAttribute('download', this.filename);
 
         element.style.display = 'none';
         document.body.appendChild(element);
@@ -34,7 +35,14 @@ class FileFormater {
 
     generateCourseHeader() {
         const c = this.courseInfo;
-        return this.hRule + `${c.courseCode} (${c.credits}) ${c.courseName} - ${c.courseSchedule} - ${c.instructor}`+ '\n' + this.hRule;
+
+        return (
+        this.hRule + 
+        this.courseInfo.courseCode + " (" + 
+        this.courseInfo.credits + ") " + 
+        this.courseInfo.courseName + " - " + 
+        this.courseInfo.courseSchedule + " - " + 
+        this.courseInfo.instructor + '\n' + this.hRule);
     }
 }
 
