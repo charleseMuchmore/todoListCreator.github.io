@@ -1,8 +1,9 @@
 import './general';
-import FileFormater from './FileFormater';
+import TxtFile from './TxtFile.js';
 import CourseInfo from './CourseInfo';
 import Courses from './services/dataManagement/Courses.js';
-import axios from 'axios';
+window.TxtFile = TxtFile;
+console.log("did it");
 
 class TodoListCreator {
     constructor()
@@ -78,10 +79,17 @@ class TodoListCreator {
 
         let courseInfo = await CourseInfo.newFromJSON(selectedCourseCode); 
 
-        // console.log(resources);
+        let content = courseInfo.toString();
 
-        const fileFormater = new FileFormater(courseInfo, resources, assignments, filename);
-        fileFormater.foo();
+        const theFile = new TxtFile();
+        theFile.addHeader(content);
+        theFile.addSubHeader("Resources");
+        theFile.addContent(this.resources);
+        theFile.addSubHeader("Assignments");
+        theFile.addContent(this.assignments);
+        theFile.addHr();
+
+        theFile.download();
       }
 
     addLine(event) {
