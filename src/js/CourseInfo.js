@@ -35,6 +35,16 @@ class CourseInfo {
         }
     }
 
+    
+    toString() {
+        return `
+        ${this.courseCode} (
+        ${this.credits}) 
+        ${this.courseName} - 
+        ${this.courseSchedule} - 
+        ${this.instructor} \n `;
+    }
+
     setAssignments() {
 
     }
