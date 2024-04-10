@@ -1,0 +1,18 @@
+{
+    "name": "@ocdla/highered",
+    "version": "0.1.0",
+    "description": "Represent information in a higher education institution.",
+    "type": "module",
+    "browser": "index.js",
+    "scripts": {
+      "build": "babel src -d dist"
+    },
+    "author": "Charlese Muchmore",
+    "license": "ISC",
+    "dependencies": {
+      "@ocdla/view": "~2.3.0"
+    },
+    "devDependencies": {
+      "jsdoc": "^3.6.10"
+    }
+  }

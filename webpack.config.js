@@ -22,8 +22,9 @@ module.exports = {
     mode: !isProduction ? 'development': 'production',
     entry: {
       index: './src/js/index.js',
-      settings: './src/js/settings.js',
-      // about: './src/js/about.js',
+      txtfile: './node_modules/@ocdla/txtfile/TxtFile.js',
+      courseinfo: './node_modules/@ocdla/highered/CourseInfo.js',
+      courses: './node_modules/@ocdla/highered/Courses.js',
     },
     output: {
       path: path.resolve(__dirname, "dist"),
@@ -45,7 +46,7 @@ module.exports = {
           use: { 
             loader: 'babel-loader', 
             options: {
-            presets: ['@babel/preset-env']
+            presets: ['@babel/preset-env', '@babel/preset-react']
           }}
         }, 
         { 
@@ -78,18 +79,6 @@ module.exports = {
         inject: "body",
         filename: "index.html",
       }),
-      new htmlWebpackPlugin({
-        template: path.resolve(__dirname, "./src/settings.html"),
-        chunks: ["settings"],
-        inject: "body",
-        filename: "settings.html",
-      }),
-      // new htmlWebpackPlugin({
-      //   template: path.resolve(__dirname, "./src/about.html"),
-      //   chunks: ["about"],
-      //   inject: "body",
-      //   filename: "about.html",
-      // }),
       // new copyPlugin({
       //   patterns: [
       //     {
