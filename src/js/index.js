@@ -1,6 +1,8 @@
+/** @jsx vNode */
 import CourseInfo from '../../node_modules/@ocdla/highered/CourseInfo.js'; //treat text file like its a seperate npm package
 import Courses from '../../node_modules/@ocdla/highered/Courses.js'; //treat text file like its a seperate npm package
 import TxtFile from '../../node_modules/@ocdla/txtfile/TxtFile.js'; //treat text file like its a seperate npm package
+import {vNode, View} from "../../node_modules/@ocdla/view/view.js"; //jsx stuff ig?
 /**
  * CSS files
  */

@@ -21,7 +21,10 @@ const fileNamePrefix = isProduction? '[chunkhash].' : '';
 module.exports = {
     mode: !isProduction ? 'development': 'production',
     entry: {
-      index: './src/js/index.js'
+      index: './src/js/index.js',
+      txtfile: './node_modules/@ocdla/txtfile/TxtFile.js',
+      courseinfo: './node_modules/@ocdla/highered/CourseInfo.js',
+      courses: './node_modules/@ocdla/highered/Courses.js',
     },
     output: {
       path: path.resolve(__dirname, "dist"),
@@ -43,7 +46,7 @@ module.exports = {
           use: { 
             loader: 'babel-loader', 
             options: {
-            presets: ['@babel/preset-env']
+            presets: ['@babel/preset-env', '@babel/preset-react']
           }}
         }, 
         { 
