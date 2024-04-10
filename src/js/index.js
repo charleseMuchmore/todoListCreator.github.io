@@ -1,7 +1,18 @@
-import './general';
-import TxtFile from './TxtFile.js';
-import CourseInfo from './CourseInfo';
-import Courses from './services/dataManagement/Courses.js';
+import CourseInfo from '../../node_modules/@ocdla/highered/CourseInfo.js'; //treat text file like its a seperate npm package
+import Courses from '../../node_modules/@ocdla/highered/Courses.js'; //treat text file like its a seperate npm package
+import TxtFile from '../../node_modules/@ocdla/txtfile/TxtFile.js'; //treat text file like its a seperate npm package
+/**
+ * CSS files
+ */
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../css/styles.css';
+
+/**
+ * Bootstrap JS File
+ */
+import 'bootstrap';
+
+
 window.TxtFile = TxtFile;
 console.log("did it");
 

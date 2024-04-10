@@ -8,15 +8,13 @@ class Courses {
     }
 
     async fetchCourses() {
-        //get the courses from db.json
         const response = await axios.get(`http://localhost:5000/courses`);
-        //Todo: get that url using .env 
         
-        //store at this.courses
         const updatedCourses = [
-            ...this.courses,
+            // ...this.courses,
             response.data
         ];
+
         this.courses = updatedCourses;
         return this.courses;
     }
