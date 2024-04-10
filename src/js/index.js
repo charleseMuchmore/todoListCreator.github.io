@@ -117,9 +117,8 @@ class TodoListCreator {
 
         if (sectionName === 'resourceButton') {
             this.resourcesCount += 1;
-            
-            let newTextInput = document.createElement('textarea');
-            newTextInput.setAttribute('id', 'resource' + this.resourcesCount);
+
+            let newTextInput = View.createElement(textInputComponent({placeholderText: "Type here", id: "resource" + this.resourcesCount}));
 
             let resourcesDiv = document.getElementById('resource-section');
             resourcesDiv.appendChild(newTextInput);
@@ -147,30 +146,38 @@ class TodoListCreator {
         };
     }
 
-    createTextInput(placeholderText, id) {
-        return `
-        <div class="col-sm-1"></div>
-        <div class="form-group col-sm-9">
-            <input type="text" placeholder="${placeholderText}" class="form-control" id="${id}">
-        </div>
-        <div class="col-sm-1"></div>
-        `
-    }
-
     async loadCoursesIntoSelect() {
         const c = new Courses();
         let courses = await c.fetchCourses();
         courses = courses[0];
         for (let i = 0; i < courses.length; i++) {
-            this.$classList.innerHTML += this.generateCourseOption(courses[i]);
+            this.$classList.appendChild(View.createElement(courseOptionComponent({course: courses[i]})));
         }
     }
-
-    generateCourseOption(course) {
-        return `
-        <option value="${course.courseCode}">${course.courseName}</option>
-        `
-    }
 }
+
+const textInputComponent = function({ placeholderText, id}) {
+    return (
+        <div>
+            <div class="col-sm-1"></div>
+            <div class="form-group col-sm-9">
+                <input type="text" placeholder={placeholderText} class="form-control" id={id} />
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        );
+};
+
+// const courseOptionSelector = function(props) {
+//     return (
+//         <option value="">--Please choose a class--</option>
+//     );
+// };
+
+const courseOptionComponent = function({ course }) {
+    return (
+        <option value={course.courseCode}>{course.courseName}</option>
+    );;
+};
 
 window.onload = () => {new TodoListCreator();}
