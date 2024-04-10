@@ -34,6 +34,7 @@
   "dependencies": {
     "axios": "^1.6.8",
     "@ocdla/txtfile": "file:./dev_modules/@ocdla/txtfile",
+    "@ocdla/highered": "file:./dev_modules/@ocdla/highered",
     "babel-loader": "^8.2.5",
     "bootstrap": "^5.2.1",
     "bootstrap-less": "^3.3.8",
