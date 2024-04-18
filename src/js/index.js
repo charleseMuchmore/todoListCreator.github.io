@@ -47,10 +47,11 @@ class TodoListCreator {
         //a possibly better alternative would be to use regex
         //or somehow get all textarea elements in the resourcesSection div
         let resources = this.$resourcesSection.children;
+        console.log(resources);
 
         for (let i = 1; i <= resources.length - 1; i++) {
             const resourceLine = resources[i];
-            resourcesContent += "-" + resourceLine.value;
+            resourcesContent += "-" + resourceLine.childNodes[1].children[0].value;
             resourcesContent += '\n'; 
         };
 
@@ -102,9 +103,9 @@ class TodoListCreator {
         const theFile = new TxtFile();
         theFile.addHeader(content);
         theFile.addSubHeader("Resources");
-        theFile.addContent(this.resources);
+        theFile.addContent(resources);
         theFile.addSubHeader("Assignments");
-        theFile.addContent(this.assignments);
+        theFile.addContent(assignments);
         theFile.addHr();
 
         theFile.download();
