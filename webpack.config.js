@@ -92,6 +92,8 @@ module.exports = {
       new webpack.DefinePlugin({
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         SERVER_URL: JSON.stringify(process.env.SERVER_URL),
+        ACCESS_TOKEN: JSON.stringify(process.env.ACCESS_TOKEN),
+        INSTANCE_URL: JSON.stringify(process.env.INSTANCE_URL),
       }),
     ],
     /* separates js (and css) that is shared between bundles - allows browser to cache */
