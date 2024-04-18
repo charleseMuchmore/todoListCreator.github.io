@@ -2,6 +2,7 @@
 import CourseInfo from '../../node_modules/@ocdla/highered/CourseInfo.js'; //treat text file like its a seperate npm package
 import Courses from '../../node_modules/@ocdla/highered/Courses.js'; //treat text file like its a seperate npm package
 import TxtFile from '../../node_modules/@ocdla/txtfile/TxtFile.js'; //treat text file like its a seperate npm package
+import SalesforceRestApi from '../../node_modules/@ocdla/salesforcerestapi/SalesforceRestApi.js'; //treat text file like its a seperate npm package
 import {vNode, View} from "../../node_modules/@ocdla/view/view.js"; //jsx stuff ig?
 /**
  * CSS files
@@ -93,6 +94,10 @@ class TodoListCreator {
         let courseInfo = await CourseInfo.newFromJSON(selectedCourseCode); 
 
         let content = courseInfo.toString();
+
+        let sfRestApi = new SalesforceRestApi(); //new instance of the class  
+        let data = await sfRestApi.fetch("query?q=SELECT+name,id+from+CourseInfo__c"); //asynchronous fetching of data  
+        console.log(data); //displaying in console  
 
         const theFile = new TxtFile();
         theFile.addHeader(content);
