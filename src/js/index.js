@@ -96,9 +96,9 @@ class TodoListCreator {
 
         let content = courseInfo.toString();
 
-        let sfRestApi = new SalesforceRestApi(); //new instance of the class  
-        let data = await sfRestApi.fetch("query?q=SELECT+name,id+from+CourseInfo__c"); //asynchronous fetching of data  
-        console.log(data); //displaying in console  
+        // let sfRestApi = new SalesforceRestApi(); //new instance of the class  
+        // let data = await sfRestApi.fetch("query?q=SELECT+name,id,coursecode__c,instructor__c,courseschedule__c+from+CourseInfo__c"); //asynchronous fetching of data  
+        // console.log(data); //displaying in console  
 
         const theFile = new TxtFile();
         theFile.addHeader(content);
@@ -152,12 +152,23 @@ class TodoListCreator {
         };
     }
 
+    ////homegrown db.json method
+    // async loadCoursesIntoSelect() {
+    //     const c = new Courses();
+    //     let courses = await c.fetchCourses();
+    //     courses = courses[0];
+    //     for (let i = 0; i < courses.length; i++) {
+    //         this.$classList.appendChild(View.createElement(courseOptionComponent({course: courses[i]})));
+    //     }
+    // }
+
+    //salesforcerestapi method
     async loadCoursesIntoSelect() {
-        const c = new Courses();
-        let courses = await c.fetchCourses();
-        courses = courses[0];
-        for (let i = 0; i < courses.length; i++) {
-            this.$classList.appendChild(View.createElement(courseOptionComponent({course: courses[i]})));
+        let sfRestApi = new SalesforceRestApi(); //new instance of the class  
+        let courses = await sfRestApi.fetch("query?q=SELECT+name,id,coursecode__c,instructor__c,courseschedule__c+from+CourseInfo__c"); //asynchronous fetching of data  
+
+        for (let i = 0; i < 3; i++) {
+            this.$classList.appendChild(View.createElement(courseOptionComponent({course: {courseCode: courses.records[i].CourseCode__c, courseName: courses.records[i].Name}})));
         }
     }
 }
@@ -181,6 +192,7 @@ const textInputComponent = function({ placeholderText, id}) {
 // };
 
 const courseOptionComponent = function({ course }) {
+    console.log(course)
     return (
         <option value={course.courseCode}>{course.courseName}</option>
     );;
