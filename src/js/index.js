@@ -168,7 +168,7 @@ class TodoListCreator {
         let courses = await sfRestApi.fetch("query?q=SELECT+name,id,coursecode__c,instructor__c,courseschedule__c+from+CourseInfo__c"); //asynchronous fetching of data  
 
         for (let i = 0; i < 3; i++) {
-            this.$classList.appendChild(View.createElement(courseOptionComponent({course: {courseCode: courses.records[i].CourseCode__c, courseName: courses.records[i].Name}})));
+            this.$classList.appendChild(View.createElement(courseOptionComponent({course: {courseCode: courses.records[i].CourseCode__c, courseName: courses.records[i].Name}}))); //break this out into seperate steps
         }
     }
 }
