@@ -8,9 +8,8 @@
       "build": "babel src -d dist"
     },
     "author": "Charlese Muchmore",
-    "license": "ISC",
+    "license": "MIT",
     "dependencies": {
-      "@ocdla/view": "~2.3.0"
     },
     "devDependencies": {
       "jsdoc": "^3.6.10"

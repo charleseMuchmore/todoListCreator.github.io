@@ -1,20 +1,32 @@
 class SalesforceRestApi {
 
     constructor() {
+        this.headers = new Headers();
+        this.authHeader = "Bearer " + ACCESS_TOKEN; 
+        headers.append("Authorization", authHeader);
     }
 
-    async fetch(queryString) {
-        const myHeaders = new Headers();
-        const authHeader = "Bearer " + ACCESS_TOKEN; 
-        myHeaders.append("Authorization", authHeader);
+    async create() {
 
+    }
+
+    async read(queryString) {
         let fetchedData;
-        //query string example: query?q=SELECT+name,id+from+CourseInfo__c
-        await fetch(`${INSTANCE_URL}/services/data/v60.0/${queryString}`, { headers: myHeaders })
+
+        //query string example: query?q=SELECT+name,id+from+SF_Object_Name
+        await fetch(`${INSTANCE_URL}/services/data/v60.0/${queryString}`, { headers: this.headers })
         .then(response => response.json())
         .then(data => { fetchedData = data;});
 
         return fetchedData;
+    }
+
+    async update() {
+
+    }
+
+    async delete() {
+
     }
 
 }
