@@ -96,9 +96,64 @@ class TodoListCreator {
 
         let content = courseInfo.toString();
 
+        ////creating a record
+        // let dataToSend = {
+        //     name: "test Name",
+        //     coursecode__c: "1234",
+        //     instructor__c: "test instructor",
+        //     courseschedule__c: "fakeSchedule"
+        // }
+
         // let sfRestApi = new SalesforceRestApi(); //new instance of the class  
-        // let data = await sfRestApi.fetch("query?q=SELECT+name,id,coursecode__c,instructor__c,courseschedule__c+from+CourseInfo__c"); //asynchronous fetching of data  
+        // let data = await sfRestApi.create("CourseInfo__c", dataToSend); 
         // console.log(data); //displaying in console  
+
+
+
+        // //updating a record
+        // let dataToSend = {
+        //     Name: "updated test Name",
+        //     coursecode__c: "0000",
+        //     instructor__c: " new instructor",
+        //     courseschedule__c: "updated fakeSchedule",
+        // }
+
+        // let sfRestApi = new SalesforceRestApi(); //new instance of the class  
+
+        // //getting the old record id
+        // let data1 = await sfRestApi.read("query?q=SELECT+name,id+from+CourseInfo__c");
+        // data1 = data1.records;
+        // let theRecord = {};
+        // for (let i = 0; i < data1.length; i++) {
+        //     if (data1[i].Name == "test Name") {
+        //         theRecord = data1[i];
+        //     }
+        // }
+        // let recordId = theRecord.Id;
+
+
+        // let data = await sfRestApi.update("CourseInfo__c", recordId,dataToSend); 
+        // console.log(data); //displaying in console 
+
+
+        // //deleting a record
+        // let sfRestApi = new SalesforceRestApi(); //new instance of the class  
+
+        // //getting the old record id
+        // let data1 = await sfRestApi.read("query?q=SELECT+name,id+from+CourseInfo__c");
+        // data1 = data1.records;
+        // let theRecord = {};
+        // for (let i = 0; i < data1.length; i++) {
+        //     if (data1[i].Name == "updated test Name") {
+        //         theRecord = data1[i];
+        //     }
+        // }
+        // let recordId = theRecord.Id;
+
+        // let data = await sfRestApi.delete("CourseInfo__c", recordId); 
+        // console.log(data); //displaying in console 
+
+        
 
         const theFile = new TxtFile();
         theFile.addHeader(content);
@@ -165,10 +220,13 @@ class TodoListCreator {
     //salesforcerestapi method
     async loadCoursesIntoSelect() {
         let sfRestApi = new SalesforceRestApi(); //new instance of the class  
-        let courses = await sfRestApi.fetch("query?q=SELECT+name,id,coursecode__c,instructor__c,courseschedule__c+from+CourseInfo__c"); //asynchronous fetching of data  
+        let courses = await sfRestApi.read("query?q=SELECT+name,id,coursecode__c,instructor__c,courseschedule__c+from+CourseInfo__c"); //asynchronous fetching of data  
 
         for (let i = 0; i < 3; i++) {
-            this.$classList.appendChild(View.createElement(courseOptionComponent({course: {courseCode: courses.records[i].CourseCode__c, courseName: courses.records[i].Name}}))); //break this out into seperate steps
+            let course = {course: {courseCode: courses.records[i].CourseCode__c, courseName: courses.records[i].Name}};
+            let component = courseOptionComponent(course);
+            let element = View.createElement(component);
+            this.$classList.appendChild(element); 
         }
     }
 }
@@ -192,7 +250,6 @@ const textInputComponent = function({ placeholderText, id}) {
 // };
 
 const courseOptionComponent = function({ course }) {
-    console.log(course)
     return (
         <option value={course.courseCode}>{course.courseName}</option>
     );;
