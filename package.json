@@ -16,7 +16,7 @@
     "@babel/preset-env": "^7.19.1",
     "@babel/preset-react": "^7.14.5",
     "@ocdla/highered": "file:./dev_modules/@ocdla/highered",
-    "@ocdla/salesforcerestapi": "file:./dev_modules/@ocdla/salesforcerestapi",
+    "@ocdla/salesforce": "file:./dev_modules/@ocdla/salesforce",
     "@ocdla/txtfile": "file:./dev_modules/@ocdla/txtfile",
     "@ocdla/view": "~2.3.3",
     "clean-webpack-plugin": "^4.0.0",
@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@ocdla/highered": "file:./dev_modules/@ocdla/highered",
-    "@ocdla/salesforcerestapi": "file:./dev_modules/@ocdla/salesforcerestapi",
+    "@ocdla/salesforce": "file:./dev_modules/@ocdla/salesforce",
     "@ocdla/txtfile": "file:./dev_modules/@ocdla/txtfile",
     "@ocdla/view": "~2.3.3",
     "axios": "^1.6.8",
