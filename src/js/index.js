@@ -31,7 +31,6 @@ class TodoListCreator {
         this.$assignmentButton = document.getElementById("assignmentButton");
         this.$resourcesSection = document.getElementById("resource-section");
         this.$assignmentsSection = document.getElementById("assignment-section");
-        this.loadCoursesIntoSelect();
 
         this.download = this.download.bind(this);
         this.$form.addEventListener("submit", this.download);
@@ -39,6 +38,18 @@ class TodoListCreator {
         this.$resourceButton.addEventListener("click", this.addLine);
         this.$assignmentButton.addEventListener("click", this.addLine);
 
+    }
+
+    async loadData() {
+        let api = new SalesforceRestApi(INSTANCE_URL, ACCESS_TOKEN); //new instance of the class  
+        let courses = await api.query("SELECT Name,Id,CourseCode__c,Instructor__c,CourseSchedule__c FROM CourseInfo__c"); //asynchronous fetching of data  
+        //let courses = await this.getCourses(); //if using db.json
+        this.courses = CourseInfo.newFromSalesforce(courses.records);
+    }
+
+    show() {
+        this.view = View.createRoot("#courseList");
+        this.view.render(<CourseDropdown courses={this.courses}></CourseDropdown>);
     }
 
     getResourcesData() {
@@ -96,7 +107,7 @@ class TodoListCreator {
 
         let content = courseInfo.toString();
 
-        ////creating a record
+        // //creating a record
         // let dataToSend = {
         //     name: "test Name",
         //     coursecode__c: "1234",
@@ -104,7 +115,7 @@ class TodoListCreator {
         //     courseschedule__c: "fakeSchedule"
         // }
 
-        // let sfRestApi = new SalesforceRestApi(); //new instance of the class  
+        // let sfRestApi = new SalesforceRestApi(INSTANCE_URL, ACCESS_TOKEN); //new instance of the class  
         // let data = await sfRestApi.create("CourseInfo__c", dataToSend); 
         // console.log(data); //displaying in console  
 
@@ -118,10 +129,10 @@ class TodoListCreator {
         //     courseschedule__c: "updated fakeSchedule",
         // }
 
-        // let sfRestApi = new SalesforceRestApi(); //new instance of the class  
+        // let sfRestApi = new SalesforceRestApi(INSTANCE_URL, ACCESS_TOKEN); //new instance of the class  
 
         // //getting the old record id
-        // let data1 = await sfRestApi.read("query?q=SELECT+name,id+from+CourseInfo__c");
+        // let data1 = await sfRestApi.read("Name,Id", "CourseInfo__c");
         // data1 = data1.records;
         // let theRecord = {};
         // for (let i = 0; i < data1.length; i++) {
@@ -131,16 +142,18 @@ class TodoListCreator {
         // }
         // let recordId = theRecord.Id;
 
-
-        // let data = await sfRestApi.update("CourseInfo__c", recordId,dataToSend); 
+        // let data = await sfRestApi.update("CourseInfo__c", recordId, dataToSend); 
         // console.log(data); //displaying in console 
 
 
+
+
+
         // //deleting a record
-        // let sfRestApi = new SalesforceRestApi(); //new instance of the class  
+        // let sfRestApi = new SalesforceRestApi(INSTANCE_URL, ACCESS_TOKEN); //new instance of the class  
 
         // //getting the old record id
-        // let data1 = await sfRestApi.read("query?q=SELECT+name,id+from+CourseInfo__c");
+        // let data1 = await sfRestApi.read("Name,Id", "CourseInfo__c");
         // data1 = data1.records;
         // let theRecord = {};
         // for (let i = 0; i < data1.length; i++) {
@@ -218,17 +231,9 @@ class TodoListCreator {
     // }
 
     //salesforcerestapi method
-    async loadCoursesIntoSelect() {
-        let sfRestApi = new SalesforceRestApi(); //new instance of the class  
-        let courses = await sfRestApi.read("query?q=SELECT+name,id,coursecode__c,instructor__c,courseschedule__c+from+CourseInfo__c"); //asynchronous fetching of data  
 
-        for (let i = 0; i < 3; i++) {
-            let course = {course: {courseCode: courses.records[i].CourseCode__c, courseName: courses.records[i].Name}};
-            let component = courseOptionComponent(course);
-            let element = View.createElement(component);
-            this.$classList.appendChild(element); 
-        }
-    }
+
+    
 }
 
 const textInputComponent = function({ placeholderText, id}) {
@@ -243,16 +248,29 @@ const textInputComponent = function({ placeholderText, id}) {
         );
 };
 
-// const courseOptionSelector = function(props) {
-//     return (
-//         <option value="">--Please choose a class--</option>
-//     );
-// };
-
-const courseOptionComponent = function({ course }) {
+const CourseDropdown = function(props) {
+    let courses = props.courses;
+    let options = courses.map((c) => {
+        return <CourseOption course={c}></CourseOption>;
+    }); //Note: change references to classlist to courselist
     return (
-        <option value={course.courseCode}>{course.courseName}</option>
-    );;
+         <select name="classlist" id="classlist" class="form-control">
+            <option value="">--Please choose a class--</option>
+            {options}
+        </select>
+    );
 };
 
-window.onload = () => {new TodoListCreator();}
+const CourseOption = function(props) {
+    let course = props.course;
+    return (
+        <option value={course.courseCode}>{course.courseName}</option>
+    );
+};
+
+
+window.onload = async () => {
+    let controller = new TodoListCreator();
+    await controller.loadData();
+    controller.show();
+}
