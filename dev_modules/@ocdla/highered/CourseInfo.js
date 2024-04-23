@@ -2,7 +2,7 @@ import Courses from './Courses.js';
 
 class CourseInfo {
     
-    constructor(courseCode, credits=0, courseName="", schedule=[], instructor="") {
+    constructor(courseCode, courseName="", credits=0, schedule=[], instructor="") {
         this.courseCode = courseCode;
         this.credits = credits;
         this.courseName = courseName;
@@ -16,22 +16,29 @@ class CourseInfo {
         return courses[0];
     }
 
-    static async newFromJSON(courseCode) {       
-        let courses = await this.getCourses();
-
-        for (let i = 0; i < courses.length; i++) {
-            let theObj = courses[i];
-            if (theObj.courseCode == courseCode) {
-                return new CourseInfo(
-                    theObj.courseCode,
-                    theObj.credits,
-                    theObj.courseName,
-                    theObj.courseSchedule,
-                    theObj.instructor);
-            }
+    static newFromJSON(data) {    
+        data = Array.isArray(data) ? data : [data];
+        let normalizedCourses = [];
+        for (let i = 0; i < data.length; i++) {
+            normalizedCourses.push(new CourseInfo(
+                data.courseCode,
+                data.credits,
+                data.courseName,
+                data.courseSchedule,
+                data.instructor));
         }
+        return normalizedCourses;
     }
 
+    static newFromSalesforce(data) {
+        data = Array.isArray(data) ? data : [data];
+        let normalizedCourses = [];
+        for (let i = 0; i < data.length; i++) {
+            let record = data[i];
+            normalizedCourses.push(new CourseInfo(record.CourseCode__c, record.Name));
+        }
+        return normalizedCourses;
+    }
     
     toString() {
         return `${this.courseCode} (${this.credits}) ${this.courseName} - ${this.courseSchedule} - ${this.instructor} \n `;
