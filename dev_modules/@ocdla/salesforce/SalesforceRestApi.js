@@ -28,7 +28,6 @@ class SalesforceRestApi {
     constructor(instanceUrl, accessToken) {
         this.instanceUrl = instanceUrl;
         this.accessToken = accessToken;
-        /**@property */
         this.headers = new Headers();
         this.authHeader = "Bearer " + this.accessToken; 
         this.headers.append("Authorization", this.authHeader);
@@ -67,7 +66,8 @@ class SalesforceRestApi {
     */
     update(objectName, record) {
         this.method = 'PATCH';
-        this.path = SalesforceRestApi.BASE_URL + 'sobjects/' + objectName + `/${record.id}`;
+        this.path = SalesforceRestApi.BASE_URL + 'sobjects/' + objectName + `/${record.Id}`;
+        delete record.Id;
         this.body = JSON.stringify(record);
 
         return this.send();
@@ -80,7 +80,7 @@ class SalesforceRestApi {
     */
     delete(objectName, record) {
         this.method = 'DELETE';
-        this.path = SalesforceRestApi.BASE_URL + 'sobjects/' + objectName + `/${record.id}`;
+        this.path = SalesforceRestApi.BASE_URL + 'sobjects/' + objectName + `/${record.Id}`;
         
         return this.send();
     }
@@ -99,9 +99,28 @@ class SalesforceRestApi {
         }
 
         return fetch(`${this.instanceUrl}${this.path}`, config)
-        .then(resp => {
-            let json = resp.json();
+        .then((resp) => {
+            if((resp.status >= 200 && resp.status <= 299 ) && (this.method == "PATCH" || this.method == "DELETE")){
+                return true;
+            }
+            else{
+                return resp.json();
+            }
+        })
+        .then((json) => {
+
+            if(json == undefined){
+                return true;
+            }
+            if(json == true){
+                return true;
+            } 
+            if(json.errorCode != null){
+                console.log(json.errorCode)
+            }
             return json;
+
+
         })
         .catch((err) => {
             console.error('Error:', err);
